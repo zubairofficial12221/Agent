@@ -34,46 +34,46 @@ def create_app():
             "service": "Nova AI Agent"
         })
 
-@app.route("/agent",methods=["POST"])
-def agent():
-    try:
-        data = request.get_json(silent=True)or {}
-        command = data.get("command", "").strip()
-
-        if not command:
-            return jsonify({
-                "success": False,
-                "message": "Command is required"
-            }), 400
-        if not is_email_command(command):
-            return jsonify({
-                "success": False,
-                "message": "Please give me a gmail command"                
-            }), 400
-
-    recipient = extract_email(command)
-    email = generate_email_with_gemini(command)
-
-    return jsonify({
-        "success": True,
-        "type": "email",
-        "email_generated": True,
-        "recipient": recipient,
-        "subject": email["subject"],
-        "body": email["body"],
-        "gmail_url": create_gmail_url(
-            email["subject"],
-            email["body"],
-            recipient
-        )
-    })
-    except Exception as e:
-        return jsonify({
+    @app.route("/agent",methods=["POST"])
+    def agent():
+        try:
+            data = request.get_json(silent=True)or {}
+            command = data.get("command", "").strip()
     
+            if not command:
+                return jsonify({
                     "success": False,
-                    "message":str(e)
-        }), 500
-
-
+                    "message": "Command is required"
+                }), 400
+            if not is_email_command(command):
+                return jsonify({
+                    "success": False,
+                    "message": "Please give me a gmail command"                
+                }), 400
     
-return app
+        recipient = extract_email(command)
+        email = generate_email_with_gemini(command)
+    
+        return jsonify({
+            "success": True,
+            "type": "email",
+            "email_generated": True,
+            "recipient": recipient,
+            "subject": email["subject"],
+            "body": email["body"],
+            "gmail_url": create_gmail_url(
+                email["subject"],
+                email["body"],
+                recipient
+            )
+        })
+        except Exception as e:
+            return jsonify({
+        
+                        "success": False,
+                        "message":str(e)
+            }), 500
+    
+    
+        
+    return app
