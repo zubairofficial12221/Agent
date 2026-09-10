@@ -25,7 +25,7 @@ def create_app():
 
     @app.route("/html")
     def html():
-        return render_template("index.html")route
+        return render_template("index.html")
 
     @app.route("/health")
     def health():
