@@ -5,7 +5,7 @@ from flask_cors import CORS
 from app.gmail import(
     is_email_command,
     extract_email,
-    create_gmail_url'
+    create_gmail_url,
     genereate_email_with_gemini
 )
 
