@@ -49,7 +49,7 @@ User command:
     data=json.dumps(payload).encode(),
     headers=(
       "Content-Type": "application/json",
-      "x-goog-apt-key": API_KEY
+      "x-goog-api-key": API_KEY
     ),
     method="POST"
   )
